@@ -28,13 +28,14 @@ from pyspark.sql.types import (
 
 OHLCV_SCHEMA: StructType = StructType(
     [
-        StructField("date", StringType(), nullable=False),
-        StructField("open", DoubleType(), nullable=False),
-        StructField("high", DoubleType(), nullable=False),
-        StructField("low", DoubleType(), nullable=False),
-        StructField("close", DoubleType(), nullable=False),
-        StructField("volume", LongType(), nullable=False),
-        StructField("barCount", LongType(), nullable=False),
-        StructField("average", DoubleType(), nullable=False),
+        StructField("row_index", LongType(), nullable=True),
+        StructField("date", StringType(), nullable=True),
+        StructField("open", DoubleType(), nullable=True),
+        StructField("high", DoubleType(), nullable=True),
+        StructField("low", DoubleType(), nullable=True),
+        StructField("close", DoubleType(), nullable=True),
+        StructField("volume", LongType(), nullable=True),
+        StructField("barCount", LongType(), nullable=True),
+        StructField("average", DoubleType(), nullable=True),
     ]
 )

@@ -1,0 +1,9 @@
+app_name: FinancialPipeline
+master: "local[*]"
+
+# Spark 4.x enables ANSI SQL semantics by default, which raises on divide-by-zero
+# and null-cast overflow. This pipeline's rolling z-score legitimately produces
+# std=0 on flat windows and expects null propagation, so we opt out at the
+# session level. Disable this only after auditing every arithmetic column.
+config:
+  spark.sql.ansi.enabled: "false"
