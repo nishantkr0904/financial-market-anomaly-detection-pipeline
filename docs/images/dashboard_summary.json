@@ -1,0 +1,16 @@
+{
+  "generation_timestamp": "2026-07-15T17:31:59.233911+00:00",
+  "processed_row_count": 2070834,
+  "generated_plots": [
+    "price_trend_with_anomalies.png",
+    "rolling_zscore.png",
+    "rolling_mean_std.png",
+    "iqr_anomaly_distribution.png",
+    "volume_distribution.png",
+    "correlation_heatmap.png",
+    "daily_anomaly_frequency.png",
+    "monthly_anomaly_frequency.png",
+    "top_anomaly_days.png"
+  ],
+  "execution_seconds": 4.146
+}
