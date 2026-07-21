@@ -198,6 +198,28 @@ brew install openjdk@17
 
 Later JDKs (24+) are not compatible with Spark 4.x — the pipeline will not run on the system default JVM if it is newer than 17.
 
+> [!IMPORTANT]
+> **Java 17 is required for local Spark execution.**
+>
+> If multiple JDKs are installed, verify that Java 17 is active before running the pipeline:
+>
+> ```bash
+> java -version
+> ```
+>
+> If another version is active (for example Java 25), switch to JDK 17:
+>
+> ```bash
+> export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+> export PATH="$JAVA_HOME/bin:$PATH"
+> ```
+>
+> Running Spark with newer JDKs may produce:
+>
+> ```text
+> UnsupportedOperationException: getSubject is not supported
+> ```
+
 ### Environment setup
 
 Create a `.env` file at the repository root (it is gitignored):
@@ -216,7 +238,7 @@ The service account must have `bigquery.dataEditor` on the target dataset, or an
 export JAVA_HOME=/opt/homebrew/opt/openjdk@17
 export PATH="$JAVA_HOME/bin:$PATH"
 
-PYTHONPATH=. python scripts/run_pipeline.py
+python scripts/run_pipeline.py
 ```
 
 The script runs every stage end-to-end: Spark session → CSV ingest → validation → cleaning → features → rolling statistics → z-score detection → IQR detection → Parquet write to `data/processed/ohlcv_anomalies/` → pandas materialization at the edge → BigQuery load into the `ohlcv_anomalies` table. Progress is logged to stdout and captured under `logs/`.

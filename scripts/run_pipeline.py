@@ -10,21 +10,29 @@ No new business logic. All transforms live in their own modules; this script
 only chains them together and handles the Spark -> pandas edge.
 """
 
-import logging
+import sys
 from pathlib import Path
 
-import pandas as pd
-from pyspark.sql.functions import lit
+# Direct invocation (``python scripts/run_pipeline.py``) puts scripts/ on
+# sys.path, not the project root. Prepend the root so absolute imports like
+# ``from analytics.features import ...`` resolve. Idempotent under pytest and
+# ``python -m`` because both already have the root on sys.path.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from analytics.features import add_features
-from analytics.iqr import detect_iqr_anomalies
-from analytics.rolling import add_rolling_stats
-from analytics.zscore import detect_zscore_anomalies
-from bigquery.loader import load_dataframe
-from spark_jobs.clean import clean
-from spark_jobs.ingest import read_ohlcv_csv
-from spark_jobs.session import get_spark_session
-from spark_jobs.validator import (
+import logging  # noqa: E402
+
+import pandas as pd  # noqa: E402
+from pyspark.sql.functions import lit  # noqa: E402
+
+from analytics.features import add_features  # noqa: E402
+from analytics.iqr import detect_iqr_anomalies  # noqa: E402
+from analytics.rolling import add_rolling_stats  # noqa: E402
+from analytics.zscore import detect_zscore_anomalies  # noqa: E402
+from bigquery.loader import load_dataframe  # noqa: E402
+from spark_jobs.clean import clean  # noqa: E402
+from spark_jobs.ingest import read_ohlcv_csv  # noqa: E402
+from spark_jobs.session import get_spark_session  # noqa: E402
+from spark_jobs.validator import (  # noqa: E402
     validate_file_exists,
     validate_not_empty,
     validate_numeric_columns,
