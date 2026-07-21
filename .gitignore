@@ -17,3 +17,5 @@ data/raw/
 data/processed/
 CLAUDE.md
 .DS_Store
+
+.pytest_cache/
