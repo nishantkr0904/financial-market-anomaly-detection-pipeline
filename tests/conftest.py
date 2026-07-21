@@ -18,6 +18,9 @@ def spark():
         .appName("test")
         .config("spark.sql.shuffle.partitions", "1")
         .config("spark.ui.enabled", "false")
+        # Match configs/spark.yaml so tests exercise the same arithmetic
+        # semantics as production (e.g., divide-by-zero => null, not raise).
+        .config("spark.sql.ansi.enabled", "false")
         .getOrCreate()
     )
     yield session
